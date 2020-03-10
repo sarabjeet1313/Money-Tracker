@@ -25,6 +25,21 @@
         <action
             android:id="@+id/action_navigation_more_to_navigation_statistics"
             app:destination="@id/navigation_statistics" />
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_sync"
+            app:destination="@id/navigation_sync" />
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_about"
+            app:destination="@id/navigation_about" />
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_help"
+            app:destination="@id/navigation_help" />
     </fragment>
 
     <fragment
@@ -32,5 +47,35 @@
         android:name="mobile.computing.group5.moneytracker.fragments.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
         tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="mobile.computing.group5.moneytracker.fragments.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_sync"
+        android:name="mobile.computing.group5.moneytracker.fragments.dataSync.SyncFragment"
+        android:label="@string/title_sync"
+        tools:layout="@layout/fragment_datasync" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="mobile.computing.group5.moneytracker.fragments.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="mobile.computing.group5.moneytracker.fragments.aboutUs.AboutUsFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_aboutus" />
+
+    <fragment
+        android:id="@+id/navigation_help"
+        android:name="mobile.computing.group5.moneytracker.fragments.help.HelpFragment"
+        android:label="@string/title_help"
+        tools:layout="@layout/fragment_help" />
 
 </navigation>

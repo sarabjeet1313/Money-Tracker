@@ -25,25 +25,25 @@ class MoreFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_more_to_navigation_statistics)
         }
 
-//        button_profile.setOnClickListener {
-//
-//        }
-//
-//        button_data_sync.setOnClickListener {
-//
-//        }
-//
-//        button_settings.setOnClickListener {
-//
-//        }
-//
-//        button_about.setOnClickListener {
-//
-//        }
-//
-//        button_help.setOnClickListener {
-//
-//        }
+        button_profile.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_profile)
+        }
+
+        button_data_sync.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_sync)
+        }
+
+        button_settings.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_settings)
+        }
+
+        button_about.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_about)
+        }
+
+        button_help.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_help)
+        }
     }
 
 }
