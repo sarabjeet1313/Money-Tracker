@@ -21,6 +21,16 @@
         android:id="@+id/navigation_more"
         android:name="mobile.computing.group5.moneytracker.fragments.more.MoreFragment"
         android:label="@string/title_transactions"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_more" >
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_statistics"
+            app:destination="@id/navigation_statistics" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_statistics"
+        android:name="mobile.computing.group5.moneytracker.fragments.statistics.StatisticsFragment"
+        android:label="@string/title_statistics"
+        tools:layout="@layout/fragment_statistics" />
 
 </navigation>
