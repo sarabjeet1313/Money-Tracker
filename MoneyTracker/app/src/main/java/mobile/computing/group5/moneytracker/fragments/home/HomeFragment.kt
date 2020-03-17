@@ -2,13 +2,16 @@ package mobile.computing.group5.moneytracker.fragments.home
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import mobile.computing.group5.moneytracker.R
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -26,6 +29,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val adapter = context?.let { ArrayAdapter.createFromResource(it, R.array.type_arrays_type_home, R.layout.dropdown_item) }
+        adapter?.setDropDownViewResource(R.layout.dropdown_item)
+        dropdown_type.adapter = adapter
 
         val MONTHS = arrayOf(
             "January",
@@ -66,7 +73,26 @@ class HomeFragment : Fragment() {
         }
 
         button_save.setOnClickListener {
-            Log.i("Message", input_description.text.toString())
+
+            val description = input_description.text.toString()
+            val amount = input_amount.text.toString()
+            var date = dateText.text.toString()
+            val type = dropdown_type.selectedItem.toString()
+
+            if(description == "" || amount == ""){
+                Toast.makeText(context, "Please enter the fields", Toast.LENGTH_SHORT).show()
+            }else{
+
+                // Store to database
+
+                if(date == "Today"){
+                    var sdf = SimpleDateFormat("MMMM dd, yyyy")
+                    date = sdf.format(Date())
+                }
+
+                Toast.makeText(context, "Saved!!", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 }

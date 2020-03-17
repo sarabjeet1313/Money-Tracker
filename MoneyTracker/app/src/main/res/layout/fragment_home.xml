@@ -100,11 +100,14 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:background="@drawable/add_area"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.145">
 
         <EditText
             android:id="@+id/input_description"
@@ -119,6 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Amount"
+            android:inputType="numberDecimal"
             android:textSize="20dp" />
 
         <Spinner
@@ -133,13 +137,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/button_calender"
-                android:layout_width="250dp"
-                android:scaleType="centerCrop"
-                android:layout_height="100dp"
+                android:layout_width="146dp"
+                android:layout_height="46dp"
                 android:layout_weight="2"
+                android:scaleType="centerCrop"
                 app:srcCompat="@mipmap/cal" />
 
             <TextView
@@ -147,10 +153,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="10dp"
                 android:text="Today"
-                android:gravity="center"
                 android:textColor="#000"
-                android:textSize="30dp"/>
+                android:textSize="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -161,29 +167,26 @@
 
             <ImageButton
                 android:id="@+id/button_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="177dp"
+                android:layout_height="27dp"
                 android:layout_weight="1"
                 app:srcCompat="@mipmap/ic_launcher" />
 
             <ImageButton
                 android:id="@+id/button_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="187dp"
+                android:layout_height="27dp"
                 android:layout_weight="1"
                 app:srcCompat="@mipmap/ic_launcher" />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save" />
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
