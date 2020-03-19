@@ -69,6 +69,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="$ 0.00"
+                android:textColor="#000000"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -79,6 +80,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="$ 0.00"
+                android:textColor="#000000"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -89,6 +91,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="$ 0.00"
+                android:textColor="#000000"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -125,14 +128,40 @@
             android:inputType="numberDecimal"
             android:textSize="20dp" />
 
-        <Spinner
-            android:id="@+id/dropdown_type"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Type"
             android:layout_marginTop="10dp"
-            android:entries="@array/type_arrays_type_home"
-            android:prompt="@string/title_prompt"
-            android:textSize="20dp" />
+            android:textSize="20sp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioIncome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:text="Income"/>
+
+            <RadioButton
+                android:id="@+id/radioExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:text="Expense"/>
+
+        </RadioGroup>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,17 +171,17 @@
 
             <ImageButton
                 android:id="@+id/button_calender"
-                android:layout_width="146dp"
-                android:layout_height="46dp"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
                 android:layout_weight="2"
-                android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/cal" />
+                app:srcCompat="@mipmap/calendar" />
 
             <TextView
                 android:id="@+id/dateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:text="Today"
                 android:textColor="#000"
@@ -167,17 +196,17 @@
 
             <ImageButton
                 android:id="@+id/button_location"
-                android:layout_width="146dp"
-                android:layout_height="46dp"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
                 android:layout_weight="2"
-                android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/cal" />
+                app:srcCompat="@mipmap/location" />
 
             <TextView
                 android:id="@+id/locationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:text="No location selected"
                 android:textColor="#000"
@@ -187,22 +216,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/button_image"
-                android:layout_width="146dp"
-                android:layout_height="46dp"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
                 android:layout_weight="2"
-                android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/cal" />
+                app:srcCompat="@mipmap/camera" />
 
             <TextView
                 android:id="@+id/imageText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:text="No image selected"
                 android:textColor="#000"
@@ -214,6 +243,9 @@
             android:id="@+id/button_save"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
+            android:textSize="20dp"
+            android:background="@drawable/save_button"
+            android:textColor="#ffffff"
             android:layout_height="wrap_content"
             android:text="Save" />
 
