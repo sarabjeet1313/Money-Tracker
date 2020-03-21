@@ -4,6 +4,7 @@ data class transactions (
 
     var date: String,
     var description: String,
-    var amount: String
+    var amount: String,
+    var id: Int
 
 )
