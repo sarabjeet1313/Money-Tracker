@@ -1,13 +1,19 @@
 package mobile.computing.group5.moneytracker.fragments.home
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -19,6 +25,13 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     var type = ""
+    private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
+    private val requestingLocationUpdates = false
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +43,27 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fusedLocationClient = context?.let { it1 ->
+            LocationServices.getFusedLocationProviderClient(
+                it1
+            )
+        }!!
+
+        val geocoder = Geocoder(context, Locale.getDefault())
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations) {
+                    val addresses: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    val obj: Address = addresses[0]
+                    var add:String = obj.locality
+                    Log.v("IGA", "Address$add")
+                    locationText.text=add
+
+                }
+            }
+        }
 
         onLoad()
 
@@ -113,9 +147,6 @@ class HomeFragment : Fragment() {
 
         }
 
-        button_location.setOnClickListener {
-        }
-
     }
 
     private fun onLoad() {
@@ -152,4 +183,73 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (!hasLocationPermissions()) {
+            requestPermissions()
+        } else {
+            getAddress()
+        }
+    }
+
+    private fun hasLocationPermissions(): Boolean {
+        return context?.let { checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) } == PackageManager.PERMISSION_GRANTED &&
+                context?.let { checkSelfPermission(it, Manifest.permission.ACCESS_COARSE_LOCATION) } == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getAddress(){
+
+        val geocoder = Geocoder(context, Locale.getDefault())
+
+        fusedLocationClient.lastLocation.addOnSuccessListener {location ->
+            if (location != null) {
+                val addresses: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                val obj: Address = addresses[0]
+                var add: String = obj.getAddressLine(0)
+                add= add.substringBefore(",")
+
+                Log.v("IGA", "Address$add")
+                locationText.text=add
+            }else{
+                createLocationRequest()
+                startLocationUpdates()
+            }
+        }
+    }
+
+    private fun requestPermissions() {
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
+    }
+
+    private fun createLocationRequest() {
+        locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+    }
+
+    private fun startLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode != REQUEST_PERMISSIONS_REQUEST_CODE) return
+        if (!grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getAddress()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
 }

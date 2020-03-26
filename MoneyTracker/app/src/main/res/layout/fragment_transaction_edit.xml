@@ -109,7 +109,7 @@
                 android:layout_weight="2"
                 app:srcCompat="@mipmap/location" />
 
-            <TextView
+            <EditText
                 android:id="@+id/locationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,12 +148,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button_save"
+            android:id="@+id/button_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/save_button"
-            android:text="Save"
+            android:text="Update"
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
