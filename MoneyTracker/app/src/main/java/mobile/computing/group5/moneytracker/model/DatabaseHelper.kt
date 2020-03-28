@@ -58,7 +58,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
     }
 
     //function to update data
-    fun updateData(transaction: Transaction) : Boolean{
+    fun updateData(transaction: Transaction, id: Int) : Boolean{
         val db = this.writableDatabase
         var cv = ContentValues()
         //setting updated values of columns
@@ -68,7 +68,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
         cv.put(COL_TYPE, transaction.type)
         cv.put(COL_LOCATION, transaction.location)
         //updating table data of required record
-        var result = db.update(TABLE_NAME,cv, "$COL_Trans_ID=?", arrayOf(transaction.trans_id.toString()))
+        var result = db.update(TABLE_NAME,cv, "$COL_Trans_ID=?", arrayOf(id.toString()))
         return result>0
     }
 
