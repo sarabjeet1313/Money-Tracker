@@ -24,6 +24,13 @@ class Transaction{
         this.type= type
         this.location=location
     }
+    constructor( desc: String, amount: Float, date: String, type: String){
+        this.desc=desc
+        this.amount=amount
+        this.date = date
+        this.type= type
+    }
+
     constructor(){}
 
 }

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#23BEAB"
-    android:paddingTop="?attr/actionBarSize">
+    android:layout_height="wrap_content">
 
-    <Button
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GO"
-        android:id="@+id/goahead"
+        android:layout_marginBottom="5dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transactionRecyclerView"
+        android:background="#23beab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
