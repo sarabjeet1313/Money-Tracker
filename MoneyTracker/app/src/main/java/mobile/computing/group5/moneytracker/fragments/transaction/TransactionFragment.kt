@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +21,14 @@ import mobile.computing.group5.moneytracker.model.Transaction
 //import mobile.computing.group5.moneytracker.createTransactionList
 import mobile.computing.group5.moneytracker.fragments.home.HomeViewModel
 import mobile.computing.group5.moneytracker.fragments.transaction.Model.transactions_list
+import org.w3c.dom.Text
 
 class TransactionFragment : Fragment() {
 
 //    private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var dbHandler: DatabaseHelper
+    private lateinit var noTransaction: TextView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,11 +51,18 @@ class TransactionFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
 
         recyclerView = root.findViewById<View>(R.id.transactionRecyclerView) as RecyclerView
+        noTransaction = root.findViewById<View>(R.id.noTransactionText) as TextView
+        noTransaction.setVisibility(View.GONE)
+
         recyclerView.adapter =
             transactionAdapter(
                 transactions
             )
         recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        if(transactions.isEmpty()) {
+            noTransaction.setVisibility(View.VISIBLE)
+        }
 
         return root
     }
