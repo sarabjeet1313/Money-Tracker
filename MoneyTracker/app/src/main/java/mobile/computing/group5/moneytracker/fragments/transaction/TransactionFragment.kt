@@ -63,8 +63,8 @@ class TransactionFragment : Fragment() {
         val transactionList = mutableListOf<transactions>()
         var moneyList = mutableListOf<money>()
 
-
-        for (i in 0..99) {
+        val total = dbHandler.getTotalItems()
+        for (i in  0..total-1) {
 
             moneyList = dbHandler.readData()
             Log.d("dbg frag", moneyList[i].trans_id.toString())
