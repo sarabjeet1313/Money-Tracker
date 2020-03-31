@@ -43,6 +43,8 @@ class EditTransactionFragment: Fragment() {
         var type = result[3]
         var location = result[4]
 
+        locationText.setText(location)
+
         if(type == "Income"){
             radioIncome.isChecked = true
         }else{
@@ -104,8 +106,8 @@ class EditTransactionFragment: Fragment() {
 
             val description = input_description.text.toString()
             val amount = input_amount.text.toString()
-            var date = dateText.text.toString()
-            var location = locationText.text.toString()
+            val date = dateText.text.toString()
+            val location = locationText.text.toString()
 
             if(description == "" || amount == ""){
                 Toast.makeText(context, "Please enter the fields", Toast.LENGTH_SHORT).show()

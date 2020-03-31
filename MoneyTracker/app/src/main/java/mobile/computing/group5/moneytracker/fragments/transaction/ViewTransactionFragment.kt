@@ -40,6 +40,12 @@ class ViewTransactionFragment: Fragment() {
         dateText.text = result[2]
         type.text = result[3]
 
+        if(result[4] == ""){
+            locationText.text = "No location selected"
+        }else{
+            locationText.text = result[4]
+        }
+
         button_edit.setOnClickListener {
             val bundle = bundleOf("id" to id)
             findNavController().navigate(R.id.action_navigation_view_to_navigation_edit, bundle)
