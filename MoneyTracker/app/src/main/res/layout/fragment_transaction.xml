@@ -12,10 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"/>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionRecyclerView"
-        android:background="#23beab"
+        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,8 +26,8 @@
         android:id="@+id/noTransactionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="No transaction available."
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_gravity="center"/>
+        android:textColor="@color/colorPrimaryDark" />
 
 </LinearLayout>

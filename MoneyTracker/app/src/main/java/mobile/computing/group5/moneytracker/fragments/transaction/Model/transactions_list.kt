@@ -5,6 +5,6 @@ data class transactions_list (
     var date: String,
     var description: String,
     var amount: String,
-    var id: Int
-
+    var id: Int,
+    var type: String
 )

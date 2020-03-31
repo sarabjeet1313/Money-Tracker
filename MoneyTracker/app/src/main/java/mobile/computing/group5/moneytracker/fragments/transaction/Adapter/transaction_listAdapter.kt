@@ -1,23 +1,19 @@
 package mobile.computing.group5.moneytracker.fragments.transaction.Adapter
 
-import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.translationMatrix
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_more.*
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_transaction.view.*
-import mobile.computing.group5.moneytracker.fragments.transaction.Model.transactions_list
+import kotlinx.android.synthetic.main.item_transaction.view.amount
+import kotlinx.android.synthetic.main.item_transaction.view.description
+import kotlinx.android.synthetic.main.item_transaction.view.type
 import mobile.computing.group5.moneytracker.R
-import mobile.computing.group5.moneytracker.fragments.transaction.ViewTransactionFragment
-
+import mobile.computing.group5.moneytracker.fragments.transaction.Model.transactions_list
 
 class transactionAdapter(private val Transactions: List<transactions_list>)
     : RecyclerView.Adapter<transactionAdapter.ViewHolder>() {
@@ -43,6 +39,15 @@ class transactionAdapter(private val Transactions: List<transactions_list>)
             itemView.description.text = transaction.description
             itemView.amount.text = "$ ${transaction.amount}"
 
+            if(transaction.type == "Income"){
+                itemView.type.text = "+"
+                itemView.type.setTextColor(Color.GREEN)
+            }else{
+                itemView.type.text = "-"
+                itemView.type.setTextColor(Color.RED)
+            }
+
+
             itemView.setOnClickListener {
 
                 val bundle: Bundle? = Bundle()
@@ -51,15 +56,8 @@ class transactionAdapter(private val Transactions: List<transactions_list>)
                     bundle.putInt("id", transaction.id)
                 }
 
-//                var viewTransaction : ViewTransactionFragment = ViewTransactionFragment()
-//
-//                viewTransaction.setArguments(bundle)
-
                 findNavController(itemView).navigate(R.id.action_navigation_transactions_to_navigation_view, bundle)
-
             }
         }
-
-
     }
 }
