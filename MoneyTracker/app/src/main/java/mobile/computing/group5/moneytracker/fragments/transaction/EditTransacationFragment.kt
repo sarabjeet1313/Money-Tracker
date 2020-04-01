@@ -1,47 +1,63 @@
 package mobile.computing.group5.moneytracker.fragments.transaction
 
 import android.app.DatePickerDialog
+import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_transaction_edit.*
+import kotlinx.android.synthetic.main.fragment_transaction_edit.button_calender
+import kotlinx.android.synthetic.main.fragment_transaction_edit.dateText
+import kotlinx.android.synthetic.main.fragment_transaction_edit.locationText
+import kotlinx.android.synthetic.main.fragment_transaction_view.*
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 import mobile.computing.group5.moneytracker.model.Transaction
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class EditTransactionFragment: Fragment() {
+
+    var tid: Int = 0
+    private val CODECAM = 0
+    private var path: Bitmap? = null
+    var byteArray: ByteArray? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_transaction_edit, container, false)
+        val mInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view: View = mInflater.inflate(R.layout.fragment_transaction_edit, container, false)
+        setHasOptionsMenu(true)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lateinit var result: List<String>
+        lateinit var result: Transaction
 
-        val id = arguments?.getInt("id")
-
+        tid = arguments?.getInt("id")!!
         val db = DatabaseHelper(activity?.applicationContext!!, null)
 
-        if (id != null) {
-            result = db.viewData(id).split("@")
-        }
+        result = db.viewData(tid)
 
-        input_description.setText(result[0])
-        input_amount.setText(result[1])
-        dateText.text = result[2]
-        var type = result[3]
-        var location = result[4]
+        input_description.setText(result.desc)
+        input_amount.setText(result.amount.toString())
+        dateText.text = result.date
+        var type =  result.type
+        byteArray = result.image
+        val location = result.location
 
         locationText.setText(location)
 
@@ -117,13 +133,32 @@ class EditTransactionFragment: Fragment() {
 
                 val db = DatabaseHelper(activity?.applicationContext!!, null)
 
-                if (id != null) {
-                    db.updateData(Transaction(description, amount.toFloat(), date, type, location), id)
+                if(byteArray != null){
+                    db.updateData(Transaction(description, amount.toFloat(), date, type, location,
+                        byteArray!!
+                    ), tid)
+                }else{
+                    db.updateData(Transaction(description, amount.toFloat(), date, type, location), tid)
                 }
+
+                byteArray?.let { it1 ->
+                    Transaction(description, amount.toFloat(), date,
+                        type, location,
+                        it1
+                    )
+                }?.let { it2 -> db.updateData(it2, tid) }
                 Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show()
             }
             findNavController().navigate(R.id.action_navigation_edit_to_navigation_transactions)
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == 16908332){
+            val bundle = bundleOf("id" to tid)
+            findNavController().navigate(R.id.action_navigation_edit_to_navigation_view, bundle)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

@@ -17,16 +17,18 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="Description "
             android:textColor="#000"
-            android:textSize="20dp"
-            android:text="Description "/>
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/description"
@@ -54,17 +56,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Amount "
                     android:textColor="#000"
-                    android:textSize="20dp"
-                    android:text="Amount "/>
+                    android:textSize="20dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Type "
                     android:textColor="#000"
-                    android:textSize="20dp"
-                    android:text="Type "/>
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -78,20 +80,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="$ 100.00"
                     android:textColor="#000"
-                    android:textStyle="italic"
                     android:textSize="20dp"
-                    android:text="$ 100.00"/>
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Income"
                     android:textColor="#000"
-                    android:textStyle="italic"
                     android:textSize="20dp"
-                    android:text="Income"/>
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
@@ -176,38 +178,48 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/viewImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/save_button"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:visibility="gone"
+            android:text="VIEW IMAGE"
+            android:scaleType="centerInside"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/button_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/save_button"
                 android:text="Edit"
-                android:layout_marginRight="5dp"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_marginEnd="5dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button_delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"
                 android:background="@drawable/save_button"
                 android:text="Delete"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_marginStart="5dp" />
+                android:textSize="20dp" />
         </LinearLayout>
-
-
 
 
     </LinearLayout>

@@ -1,7 +1,10 @@
 package mobile.computing.group5.moneytracker.fragments.transaction
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -11,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_transaction_view.*
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
+import mobile.computing.group5.moneytracker.model.Transaction
 
 class ViewTransactionFragment: Fragment() {
 
@@ -19,31 +23,42 @@ class ViewTransactionFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_transaction_view, container, false)
+        val mInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view: View = mInflater.inflate(R.layout.fragment_transaction_view, container, false)
+        setHasOptionsMenu(true)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lateinit var result: List<String>
+        lateinit var result: Transaction
 
         val id = arguments?.getInt("id")
+        Log.i("message", id.toString())
 
         val db = DatabaseHelper(activity?.applicationContext!!, null)
 
         if (id != null) {
-            result = db.viewData(id).split("@")
+            result = db.viewData(id)
         }
 
-        description.text = result[0]
-        amount.text = result[1]
-        dateText.text = result[2]
-        type.text = result[3]
+        description.text = result.desc
+        amount.text = result.amount.toString()
+        dateText.text = result.date
+        type.text = result.type
+        val temp = result.image
+        val location = result.location
 
-        if(result[4] == ""){
+        if(temp != null){
+            imageText.text = "Image Selected"
+            viewImage.visibility = View.VISIBLE
+        }
+
+        if(location == ""){
             locationText.text = "No location selected"
         }else{
-            locationText.text = result[4]
+            locationText.text = location
         }
 
         button_edit.setOnClickListener {
@@ -60,6 +75,19 @@ class ViewTransactionFragment: Fragment() {
             findNavController().navigate(R.id.action_navigation_view_to_navigation_transactions)
         }
 
+        viewImage.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            findNavController().navigate(R.id.action_navigation_view_to_navigation_view_image, bundle)
+        }
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == 16908332){
+            findNavController().navigate(R.id.action_navigation_view_to_navigation_transactions)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

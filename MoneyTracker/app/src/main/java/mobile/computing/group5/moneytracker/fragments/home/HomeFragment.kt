@@ -1,13 +1,17 @@
 package mobile.computing.group5.moneytracker.fragments.home
 
 import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +23,7 @@ import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.*
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +36,9 @@ class HomeFragment : Fragment() {
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
 
-
+    private val CODECAM = 0
+    private var path: Bitmap? = null
+    private var byteArray: ByteArray? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,10 +64,8 @@ class HomeFragment : Fragment() {
                 for (location in locationResult.locations) {
                     val addresses: List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     val obj: Address = addresses[0]
-                    var add:String = obj.locality
-                    Log.v("IGA", "Address$add")
-                    locationText.text=add
-
+                    val add:String = obj.locality
+                    locationText.text = add
                 }
             }
         }
@@ -86,6 +91,11 @@ class HomeFragment : Fragment() {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
+
+        button_image.setOnClickListener{
+            val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(callCameraIntent,CODECAM)
+        }
 
         button_calender.setOnClickListener{
             val dpd = context?.let { it1 ->
@@ -123,7 +133,7 @@ class HomeFragment : Fragment() {
             val description = input_description.text.toString()
             val amount = input_amount.text.toString()
             var date = dateText.text.toString()
-            var location = locationText.text.toString()
+            val location = locationText.text.toString()
 
             if(description == "" || amount == ""){
                 Toast.makeText(context, "Please enter the fields", Toast.LENGTH_SHORT).show()
@@ -138,7 +148,11 @@ class HomeFragment : Fragment() {
 
                 val db = DatabaseHelper(activity?.applicationContext!!, null)
 
-                db.insertData(Transaction(description, amount.toFloat(), date, type, location))
+                if(byteArray == null){
+                    db.insertData(Transaction(description, amount.toFloat(), date, type, location))
+                }else{
+                    db.insertData(Transaction(description, amount.toFloat(), date, type, location, byteArray!!))
+                }
 
                 onLoad()
 
@@ -157,7 +171,6 @@ class HomeFragment : Fragment() {
         val data = db.readData()
 
         for(i in 0 until data.size){
-            Log.i("message", data[i].type)
             if(data[i].type == "Income"){
                 income += data[i].amount
             }else{
@@ -180,6 +193,24 @@ class HomeFragment : Fragment() {
             }
             else -> {
                 AmountBalance.setTextColor(Color.parseColor("#000000"))
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            CODECAM ->{
+                if(resultCode== Activity.RESULT_OK && data !=null){
+                    path = data.extras!!.get("data") as Bitmap
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    path!!.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                    byteArray= byteArrayOutputStream.toByteArray()
+                    imageText.text = "Image captured"
+                }
+            }
+            else -> {
+                Log.i("message", "Failure")
             }
         }
     }

@@ -12,6 +12,7 @@
     <string name="title_prompt">Type</string>
     <string name="title_view">View</string>
     <string name="title_edit">Edit</string>
+    <string name="title_image">Image</string>
     <string-array name="type_arrays_type_home">
         <item>Expense</item>
         <item>Income</item>
