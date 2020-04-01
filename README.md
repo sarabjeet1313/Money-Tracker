@@ -4,8 +4,8 @@ Mobile Computing Project
 
 Group Members:
 
-Deep Muni
-Sarabjeet Singh
-Simrabanu Diwan
-Yuganthi Krishnamurthy
-Krutin Trivedi
+Deep Muni<br>
+Sarabjeet Singh<br>
+Simrabanu Diwan<br>
+Yuganthi Krishnamurthy<br>
+Krutin Trivedi<br>
