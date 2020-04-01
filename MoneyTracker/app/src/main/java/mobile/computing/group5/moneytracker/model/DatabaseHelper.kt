@@ -34,6 +34,12 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+
+    }
+
+    fun clearTable(){
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME, null, null)
     }
 
     //function to insert data into database

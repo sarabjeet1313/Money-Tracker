@@ -2,13 +2,18 @@ package mobile.computing.group5.moneytracker.fragments.reset
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_reset.*
 import mobile.computing.group5.moneytracker.R
+import mobile.computing.group5.moneytracker.model.DatabaseHelper
+
 
 class ResetFragment : Fragment() {
 
@@ -25,6 +30,23 @@ class ResetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        button_yes.setOnClickListener {
+            val db = DatabaseHelper(activity?.applicationContext!!, null)
+            var message = ""
+            message = if(db.readData().size == 0){
+                "No transaction present!!"
+            }else{
+                db.clearTable()
+                "Transactions Cleared!!"
+            }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_navigation_reset_to_navigation_home)
+        }
+
+        button_no.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_reset_to_navigation_settings)
+        }
 
     }
 

@@ -136,6 +136,9 @@
         <action
             android:id="@+id/action_navigation_reset_to_navigation_settings"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_navigation_reset_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment
