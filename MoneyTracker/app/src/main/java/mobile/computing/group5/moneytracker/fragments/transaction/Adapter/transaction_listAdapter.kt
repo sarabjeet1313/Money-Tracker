@@ -41,10 +41,10 @@ class transactionAdapter(private val Transactions: List<transactions_list>)
 
             if(transaction.type == "Income"){
                 itemView.type.text = "+"
-                itemView.type.setTextColor(Color.GREEN)
+                itemView.type.setTextColor(Color.parseColor("#46A049"))
             }else{
                 itemView.type.text = "-"
-                itemView.type.setTextColor(Color.RED)
+                itemView.type.setTextColor(Color.parseColor("#F44336"))
             }
 
 

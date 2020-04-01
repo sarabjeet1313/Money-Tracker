@@ -186,7 +186,7 @@ class HomeFragment : Fragment() {
 
         when {
             balance[1].toFloat() < 0.0 -> {
-                AmountBalance.setTextColor(Color.parseColor("#ff0000"))
+                AmountBalance.setTextColor(Color.parseColor("#F44336"))
             }
             balance[1].toFloat() > 0.0 -> {
                 AmountBalance.setTextColor(Color.parseColor("#46A049"))
