@@ -171,10 +171,10 @@
 
             <ImageButton
                 android:id="@+id/button_calender"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="45dp"
                 android:layout_weight="2"
-                app:srcCompat="@mipmap/calendar" />
+                android:background="@drawable/ic_calendar_today_black_24dp" />
 
             <TextView
                 android:id="@+id/dateText"
@@ -196,10 +196,10 @@
 
             <ImageButton
                 android:id="@+id/button_location"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="45dp"
                 android:layout_weight="2"
-                app:srcCompat="@mipmap/location" />
+                android:background="@drawable/ic_location_on_black_24dp" />
 
             <TextView
                 android:id="@+id/locationText"
@@ -221,10 +221,10 @@
 
             <ImageButton
                 android:id="@+id/button_image"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="45dp"
-                android:layout_weight="2"
-                app:srcCompat="@mipmap/camera" />
+                android:layout_weight="1"
+                android:background="@drawable/ic_camera_alt_black_24dp" />
 
             <TextView
                 android:id="@+id/imageText"
@@ -237,12 +237,20 @@
                 android:textColor="#000"
                 android:textSize="20dp" />
 
+            <ImageButton
+                android:id="@+id/button_delete"
+                android:layout_width="120dp"
+                android:layout_height="45dp"
+                android:background="@drawable/ic_delete_black_24dp"
+                android:visibility="invisible"
+                android:layout_weight="1"/>
+
         </LinearLayout>
 
         <Button
             android:id="@+id/button_save"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:textSize="20dp"
             android:background="@drawable/save_button"
             android:textColor="#ffffff"

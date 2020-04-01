@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -28,8 +28,10 @@
         android:id="@+id/noTransactionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:layout_gravity="center"
-        android:text="No transaction available."
+        android:textSize="25sp"
+        android:text="No transaction available"
         android:textColor="@color/colorPrimaryDark" />
 
 </LinearLayout>

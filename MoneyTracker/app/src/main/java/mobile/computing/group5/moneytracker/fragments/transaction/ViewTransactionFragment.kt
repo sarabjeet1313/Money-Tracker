@@ -1,6 +1,7 @@
 package mobile.computing.group5.moneytracker.fragments.transaction
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_transaction_view.*
+import kotlinx.android.synthetic.main.fragment_view_image.*
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 import mobile.computing.group5.moneytracker.model.Transaction
@@ -34,13 +36,13 @@ class ViewTransactionFragment: Fragment() {
 
         lateinit var result: Transaction
 
-        val id = arguments?.getInt("id")
-        Log.i("message", id.toString())
+        val tid = arguments?.getInt("id")
+        Log.i("message", tid.toString())
 
         val db = DatabaseHelper(activity?.applicationContext!!, null)
 
-        if (id != null) {
-            result = db.viewData(id)
+        if (tid != null) {
+            result = db.viewData(tid)
         }
 
         description.text = result.desc
@@ -52,7 +54,8 @@ class ViewTransactionFragment: Fragment() {
 
         if(temp != null){
             imageText.text = "Image Selected"
-            viewImage.visibility = View.VISIBLE
+            val image = temp?.size?.let { BitmapFactory.decodeByteArray(temp, 0, it) }
+            button_image.setImageBitmap(image)
         }
 
         if(location == ""){
@@ -62,21 +65,21 @@ class ViewTransactionFragment: Fragment() {
         }
 
         button_edit.setOnClickListener {
-            val bundle = bundleOf("id" to id)
+            val bundle = bundleOf("id" to tid)
             findNavController().navigate(R.id.action_navigation_view_to_navigation_edit, bundle)
         }
 
         button_delete.setOnClickListener {
 
-            if (id != null) {
-                db.deleteData(id)
+            if (tid != null) {
+                db.deleteData(tid)
             }
             Toast.makeText(context, "Transaction Deleted", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_navigation_view_to_navigation_transactions)
         }
 
-        viewImage.setOnClickListener {
-            val bundle = bundleOf("id" to id)
+        button_image.setOnClickListener {
+            val bundle = bundleOf("id" to tid)
             findNavController().navigate(R.id.action_navigation_view_to_navigation_view_image, bundle)
         }
 

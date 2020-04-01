@@ -17,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.*
@@ -29,16 +30,16 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-    var type = ""
-    private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
-    private val requestingLocationUpdates = false
+    private val LOCATION_CODE = 34
+    private val CAMERA_CODE = 21
+    private val CODECAM = 0
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
-
-    private val CODECAM = 0
     private var path: Bitmap? = null
     private var byteArray: ByteArray? = null
+    var type = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +57,6 @@ class HomeFragment : Fragment() {
                 it1
             )
         }!!
-
         val geocoder = Geocoder(context, Locale.getDefault())
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -72,30 +72,11 @@ class HomeFragment : Fragment() {
 
         onLoad()
 
-        val listOfMonths = arrayOf(
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        )
-
+        val listOfMonths = arrayOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-
-        button_image.setOnClickListener{
-            val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(callCameraIntent,CODECAM)
-        }
 
         button_calender.setOnClickListener{
             val dpd = context?.let { it1 ->
@@ -113,8 +94,15 @@ class HomeFragment : Fragment() {
             dpd?.show()
         }
 
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        button_image.setOnClickListener{
+            if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
+                requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_CODE)
+            }else{
+                openCamera()
+            }
+        }
 
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
             type = when {
                 R.id.radioIncome == checkedId -> {
                     "Income"
@@ -126,6 +114,14 @@ class HomeFragment : Fragment() {
                     ""
                 }
             }
+        }
+
+        button_delete.setOnClickListener {
+            byteArray = null
+            imageText.text = "No image selected"
+            button_image.setImageBitmap(null)
+            button_image.setBackgroundResource(R.drawable.ic_camera_alt_black_24dp)
+            button_delete.visibility = View.INVISIBLE
         }
 
         button_save.setOnClickListener {
@@ -163,6 +159,59 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (!hasLocationPermissions()) {
+            requestPermissions()
+        } else {
+            getAddress()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if(requestCode == CAMERA_CODE){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            }
+        }else if(requestCode == LOCATION_CODE){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getAddress()
+            }
+        }else{
+            return
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            CODECAM ->{
+                if(resultCode== Activity.RESULT_OK && data !=null){
+                    path = data.extras!!.get("data") as Bitmap
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    path!!.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                    byteArray= byteArrayOutputStream.toByteArray()
+                    imageText.text = "Image captured"
+                    button_image.setImageBitmap(path)
+                    button_delete.visibility = View.VISIBLE
+                }
+            }
+            else -> {
+                Log.i("message", "Failure")
+            }
+        }
+    }
+
+    private fun openCamera(){
+        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(callCameraIntent,CODECAM)
+    }
+
     private fun onLoad() {
         val db = DatabaseHelper(activity?.applicationContext!!, null)
         var income = 0.0
@@ -195,33 +244,17 @@ class HomeFragment : Fragment() {
                 AmountBalance.setTextColor(Color.parseColor("#000000"))
             }
         }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode){
-            CODECAM ->{
-                if(resultCode== Activity.RESULT_OK && data !=null){
-                    path = data.extras!!.get("data") as Bitmap
-                    val byteArrayOutputStream = ByteArrayOutputStream()
-                    path!!.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-                    byteArray= byteArrayOutputStream.toByteArray()
-                    imageText.text = "Image captured"
-                }
-            }
-            else -> {
-                Log.i("message", "Failure")
-            }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (!hasLocationPermissions()) {
-            requestPermissions()
-        } else {
-            getAddress()
-        }
+        input_description.setText("")
+        input_amount.setText("")
+        radioExpense.isChecked = false
+        radioIncome.isChecked = false
+        dateText.text = "Today"
+        byteArray = null
+        imageText.text = "No image selected"
+        button_image.setImageBitmap(null)
+        button_image.setBackgroundResource(R.drawable.ic_camera_alt_black_24dp)
+        button_delete.visibility = View.INVISIBLE
     }
 
     private fun hasLocationPermissions(): Boolean {
@@ -239,9 +272,7 @@ class HomeFragment : Fragment() {
                 val obj: Address = addresses[0]
                 var add: String = obj.getAddressLine(0)
                 add= add.substringBefore(",")
-
-                Log.v("IGA", "Address$add")
-                locationText.text=add
+                locationText.text = add
             }else{
                 createLocationRequest()
                 startLocationUpdates()
@@ -250,7 +281,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun requestPermissions() {
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_CODE)
     }
 
     private fun createLocationRequest() {
@@ -265,20 +296,6 @@ class HomeFragment : Fragment() {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode != REQUEST_PERMISSIONS_REQUEST_CODE) return
-        if (!grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            getAddress()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-    override fun onPause() {
-        super.onPause()
-        stopLocationUpdates()
-    }
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }

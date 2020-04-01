@@ -65,6 +65,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
         cv.put(COL_DATE, transaction.date)
         cv.put(COL_TYPE, transaction.type)
         cv.put(COL_LOCATION, transaction.location)
+        cv.put(COL_IMG, transaction.image)
 
         //updating table data of required record
         val result = db.update(TABLE_NAME,cv, "$COL_Trans_ID=?", arrayOf(id.toString()))
