@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mobile.computing.group5.moneytracker.R
-import mobile.computing.group5.moneytracker.fragments.transaction.Adapter.transactionAdapter
+import mobile.computing.group5.moneytracker.fragments.transaction.Adapter.transaction_listAdapter
 import mobile.computing.group5.moneytracker.fragments.transaction.Model.transactions_list
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 import mobile.computing.group5.moneytracker.model.Transaction
@@ -40,7 +40,7 @@ class TransactionFragment : Fragment() {
         noTransaction.visibility = View.GONE
 
         recyclerView.adapter =
-            transactionAdapter(
+            transaction_listAdapter(
                 transactions
             )
         recyclerView.layoutManager = LinearLayoutManager(activity)

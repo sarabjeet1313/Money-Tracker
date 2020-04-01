@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.item_transaction.view.type
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.fragments.transaction.Model.transactions_list
 
-class transactionAdapter(private val Transactions: List<transactions_list>)
-    : RecyclerView.Adapter<transactionAdapter.ViewHolder>() {
+class transaction_listAdapter(private val Transactions: List<transactions_list>)
+    : RecyclerView.Adapter<transaction_listAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val holder = LayoutInflater.from(parent.context).inflate(R.layout.item_transaction, parent, false)

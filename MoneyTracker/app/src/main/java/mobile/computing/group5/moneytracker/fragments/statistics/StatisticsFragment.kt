@@ -4,9 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
@@ -32,8 +34,11 @@ class StatisticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_statistics, container, false)
-        val pie:PieChart = root.findViewById(R.id.pieChart)
+        val mInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view: View = mInflater.inflate(R.layout.fragment_statistics, container, false)
+        setHasOptionsMenu(true)
+
+        val pie:PieChart = view.findViewById(R.id.pieChart)
 
         pie.isRotationEnabled = true
         pie.holeRadius = 0f
@@ -48,7 +53,7 @@ class StatisticsFragment : Fragment() {
         val incomeEntry = LegendEntry("Income", Legend.LegendForm.CIRCLE,20f,20f,null,Color.parseColor("#46A049"))
         l.setCustom(listOf(expenseEntry,incomeEntry))
 
-        return root
+        return view
     }
 
     private fun addDataToPie(pie: PieChart) {
@@ -78,6 +83,14 @@ class StatisticsFragment : Fragment() {
         val pieData = PieData(dataSet)
         pie.data = pieData
         pie.invalidate()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == 16908332){
+            findNavController().navigate(R.id.action_navigation_statistics_to_navigation_more)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

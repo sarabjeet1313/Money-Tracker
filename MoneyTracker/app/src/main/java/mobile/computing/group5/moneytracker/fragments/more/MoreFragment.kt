@@ -25,14 +25,6 @@ class MoreFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_more_to_navigation_statistics)
         }
 
-        button_profile.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_more_to_navigation_profile)
-        }
-
-        button_data_sync.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_more_to_navigation_sync)
-        }
-
         button_settings.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_more_to_navigation_settings)
         }

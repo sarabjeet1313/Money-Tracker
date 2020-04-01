@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:paddingTop="?attr/actionBarSize">
+    android:background="@color/background"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <LinearLayout
         android:id="@+id/outer_wrapper"
@@ -33,30 +34,6 @@
                 android:text="Statistics" />
 
             <Button
-                android:id="@+id/button_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Profile" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/inner_wrapper_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/button_data_sync"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Import/Export" />
-
-            <Button
                 android:id="@+id/button_settings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -66,7 +43,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/inner_wrapper_3"
+            android:id="@+id/inner_wrapper_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

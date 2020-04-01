@@ -1,4 +1,4 @@
-package mobile.computing.group5.moneytracker.fragments.dataSync
+package mobile.computing.group5.moneytracker.fragments.reset
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import mobile.computing.group5.moneytracker.R
 
-class SyncFragment : Fragment() {
+class ResetFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,7 +18,7 @@ class SyncFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val mInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view: View = mInflater.inflate(R.layout.fragment_datasync, container, false)
+        val view: View = mInflater.inflate(R.layout.fragment_reset, container, false)
         setHasOptionsMenu(true)
         return view
     }
@@ -30,7 +30,7 @@ class SyncFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == 16908332){
-            findNavController().navigate(R.id.action_navigation_sync_to_navigation_settings)
+            findNavController().navigate(R.id.action_navigation_reset_to_navigation_settings)
             return true
         }
         return super.onOptionsItemSelected(item)
