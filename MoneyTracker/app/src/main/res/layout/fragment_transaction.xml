@@ -6,13 +6,9 @@
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:paddingTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionRecyclerView"
