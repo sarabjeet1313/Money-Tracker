@@ -30,7 +30,7 @@ class ProfileFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == 16908332){
-            findNavController().navigate(R.id.action_navigation_profile_to_navigation_settings)
+            findNavController().navigate(R.id.action_navigation_profile_to_navigation_more)
             return true
         }
         return super.onOptionsItemSelected(item)

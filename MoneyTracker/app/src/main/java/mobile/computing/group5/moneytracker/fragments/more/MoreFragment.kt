@@ -21,12 +21,17 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        button_profile.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_profile)
+        }
+
         button_statistics.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_more_to_navigation_statistics)
         }
 
-        button_settings.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_more_to_navigation_settings)
+        button_reset.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_more_to_navigation_reset)
         }
 
         button_about.setOnClickListener {

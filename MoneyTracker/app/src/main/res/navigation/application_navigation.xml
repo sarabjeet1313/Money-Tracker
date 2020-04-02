@@ -69,14 +69,17 @@
             android:id="@+id/action_navigation_more_to_navigation_statistics"
             app:destination="@id/navigation_statistics" />
         <action
-            android:id="@+id/action_navigation_more_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
+            android:id="@+id/action_navigation_more_to_navigation_reset"
+            app:destination="@id/navigation_reset" />
         <action
             android:id="@+id/action_navigation_more_to_navigation_about"
             app:destination="@id/navigation_about" />
         <action
             android:id="@+id/action_navigation_more_to_navigation_help"
             app:destination="@id/navigation_help" />
+        <action
+            android:id="@+id/action_navigation_more_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment
@@ -95,36 +98,7 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <action
-            android:id="@+id/action_navigation_profile_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_sync"
-        android:name="mobile.computing.group5.moneytracker.fragments.dataSync.SyncFragment"
-        android:label="@string/title_sync"
-        tools:layout="@layout/fragment_datasync">
-        <action
-            android:id="@+id/action_navigation_sync_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_settings"
-        android:name="mobile.computing.group5.moneytracker.fragments.settings.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings">
-        <action
-            android:id="@+id/action_navigation_settings_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
-        <action
-            android:id="@+id/action_navigation_settings_to_navigation_datasync"
-            app:destination="@id/navigation_sync" />
-        <action
-            android:id="@+id/action_navigation_settings_to_navigation_reset"
-            app:destination="@id/navigation_reset" />
-        <action
-            android:id="@+id/action_navigation_settings_to_navigation_more"
+            android:id="@+id/action_navigation_profile_to_navigation_more"
             app:destination="@id/navigation_more" />
     </fragment>
 
@@ -134,8 +108,8 @@
         android:label="@string/title_reset"
         tools:layout="@layout/fragment_reset">
         <action
-            android:id="@+id/action_navigation_reset_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
+            android:id="@+id/action_navigation_reset_to_navigation_more"
+            app:destination="@id/navigation_more" />
         <action
             android:id="@+id/action_navigation_reset_to_navigation_home"
             app:destination="@id/navigation_home" />

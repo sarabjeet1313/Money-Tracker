@@ -45,14 +45,14 @@ class ResetFragment : Fragment() {
         }
 
         button_no.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_reset_to_navigation_settings)
+            findNavController().navigate(R.id.action_navigation_reset_to_navigation_more)
         }
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == 16908332){
-            findNavController().navigate(R.id.action_navigation_reset_to_navigation_settings)
+            findNavController().navigate(R.id.action_navigation_reset_to_navigation_more)
             return true
         }
         return super.onOptionsItemSelected(item)
