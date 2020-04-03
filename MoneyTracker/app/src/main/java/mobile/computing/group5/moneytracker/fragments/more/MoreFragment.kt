@@ -9,6 +9,9 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_more.*
 import mobile.computing.group5.moneytracker.R
 
+/**
+ * main class for more fragment to inflate the fragment_more.xml
+ */
 class MoreFragment : Fragment() {
 
     override fun onCreateView(
@@ -22,6 +25,7 @@ class MoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // handling navigation to four other fragments.
         button_statistics.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_more_to_navigation_statistics)
         }

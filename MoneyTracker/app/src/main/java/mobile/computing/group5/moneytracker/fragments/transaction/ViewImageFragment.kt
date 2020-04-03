@@ -15,6 +15,9 @@ import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 import mobile.computing.group5.moneytracker.model.Transaction
 
+/**
+ * main class for view image fragment to inflate fragment_view_image.xml
+ */
 class ViewImageFragment : Fragment() {
 
     var tid: Int = 0
@@ -36,6 +39,7 @@ class ViewImageFragment : Fragment() {
         lateinit var result: Transaction
         tid = arguments?.getInt("id")!!
 
+        // fetch the transaction from database using transaction id
         val db = DatabaseHelper(activity?.applicationContext!!, null)
         result = db.viewData(tid)
 
@@ -46,7 +50,7 @@ class ViewImageFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){  // back button functionality
             val bundle = bundleOf("id" to tid)
             findNavController().navigate(R.id.action_navigation_view_image_to_navigation_view, bundle)
             return true

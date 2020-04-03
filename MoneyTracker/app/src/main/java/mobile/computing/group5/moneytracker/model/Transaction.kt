@@ -1,5 +1,6 @@
 package mobile.computing.group5.moneytracker.model
 
+// data class or model for the application
 class Transaction{
     var trans_id : Int = 0
     var desc : String = ""

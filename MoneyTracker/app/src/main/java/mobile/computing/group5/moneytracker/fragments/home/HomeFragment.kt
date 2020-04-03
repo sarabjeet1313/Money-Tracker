@@ -28,8 +28,12 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * main class for home fragment to inflate the fragment_home.xml
+ */
 class HomeFragment : Fragment() {
 
+    // local private variables initialization
     private val LOCATION_CODE = 34
     private val CAMERA_CODE = 21
     private val CODECAM = 0
@@ -57,6 +61,8 @@ class HomeFragment : Fragment() {
                 it1
             )
         }!!
+
+        // handling the location functionality
         val geocoder = Geocoder(context, Locale.getDefault())
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -72,12 +78,14 @@ class HomeFragment : Fragment() {
 
         onLoad()
 
+        // handling the calendar functionality
         val listOfMonths = arrayOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
+        // open up the calendar on click of calendar icon
         button_calender.setOnClickListener{
             val dpd = context?.let { it1 ->
                 DatePickerDialog(
@@ -94,6 +102,7 @@ class HomeFragment : Fragment() {
             dpd?.show()
         }
 
+        // open up camera on click of camera icon
         button_image.setOnClickListener{
             if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
                 requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_CODE)
@@ -102,6 +111,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // handling the income and expense option
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             type = when {
                 R.id.radioIncome == checkedId -> {
@@ -116,6 +126,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // handling click listener on delete button
         button_delete.setOnClickListener {
             byteArray = null
             imageText.text = "No image selected"
@@ -124,6 +135,7 @@ class HomeFragment : Fragment() {
             button_delete.visibility = View.INVISIBLE
         }
 
+        // handling click listener on save button
         button_save.setOnClickListener {
 
             val description = input_description.text.toString()
@@ -131,6 +143,7 @@ class HomeFragment : Fragment() {
             var date = dateText.text.toString()
             val location = locationText.text.toString()
 
+            // error handling for specific fields.
             if(description == "" || amount == ""){
                 Toast.makeText(context, "Please enter the fields", Toast.LENGTH_SHORT).show()
             }else if(type == ""){
@@ -142,6 +155,7 @@ class HomeFragment : Fragment() {
                     date = sdf.format(Date())
                 }
 
+                // handling database insertion operation.
                 val db = DatabaseHelper(activity?.applicationContext!!, null)
 
                 if(byteArray == null){
@@ -152,6 +166,7 @@ class HomeFragment : Fragment() {
 
                 onLoad()
 
+                // success status to user.
                 Toast.makeText(context, "Saved!!", Toast.LENGTH_SHORT).show()
             }
 
@@ -159,6 +174,7 @@ class HomeFragment : Fragment() {
 
     }
 
+    // overriding onStart to get permission and address.
     override fun onStart() {
         super.onStart()
         if (!hasLocationPermissions()) {
@@ -168,11 +184,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // overriding onPause to stop location updates.
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
     }
 
+    // overriding onRequestPermissionsResult to allow Camera and Location services.
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if(requestCode == CAMERA_CODE){
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -187,6 +205,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // overriding onActivityResult to execute camera functionalities
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
@@ -207,11 +226,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // private method to handle open camera context.
     private fun openCamera(){
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(callCameraIntent,CODECAM)
     }
 
+    // private method to execute after loading.
     private fun onLoad() {
         val db = DatabaseHelper(activity?.applicationContext!!, null)
         var income = 0.0
@@ -227,6 +248,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // updating the summary content.
         AmountIncome.text = "$ " + String.format("%.2f", (income)).toDouble().toString()
         AmountExpense.text = "$ " + String.format("%.2f", expense).toDouble().toString()
         AmountBalance.text = "$ " + String.format("%.2f", (income-expense)).toDouble().toString()
@@ -257,11 +279,13 @@ class HomeFragment : Fragment() {
         button_delete.visibility = View.INVISIBLE
     }
 
+    // private method to check location permissions
     private fun hasLocationPermissions(): Boolean {
         return context?.let { checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) } == PackageManager.PERMISSION_GRANTED &&
                 context?.let { checkSelfPermission(it, Manifest.permission.ACCESS_COARSE_LOCATION) } == PackageManager.PERMISSION_GRANTED
     }
 
+    // private method to fetch address
     private fun getAddress(){
 
         val geocoder = Geocoder(context, Locale.getDefault())
@@ -280,10 +304,12 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // private method for requesting location permissions
     private fun requestPermissions() {
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_CODE)
     }
 
+    // private method to create location request
     private fun createLocationRequest() {
         locationRequest = LocationRequest.create().apply {
             interval = 10000
@@ -292,10 +318,12 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // private method to start location update
     private fun startLocationUpdates() {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
+    // private method to stop location update
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }

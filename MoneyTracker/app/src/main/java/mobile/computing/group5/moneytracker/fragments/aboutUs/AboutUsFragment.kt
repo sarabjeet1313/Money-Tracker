@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import mobile.computing.group5.moneytracker.R
 
+/**
+ * main fragment class to inflate the fragment_aboutus xml.
+ */
 class AboutUsFragment : Fragment() {
 
     override fun onCreateView(
@@ -29,7 +32,7 @@ class AboutUsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){  // back button functionality
             findNavController().navigate(R.id.action_navigation_aboutus_to_navigation_more)
             return true
         }

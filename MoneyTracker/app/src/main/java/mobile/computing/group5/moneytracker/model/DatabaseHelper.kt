@@ -5,6 +5,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+/**
+ *  DATABASE for the application.
+ *  It consists of different functions that are storing, manipulating, and sending the data across amny fragments.
+ */
 class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): SQLiteOpenHelper(context,
     DATABASE_NAME,null, 1){
 
@@ -112,6 +116,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
         return list //returning list of transaction objects
     }
 
+    // return data fro specific transction id
     fun viewData(id: Int) : Transaction {
         val transaction = Transaction()
         val db = this.readableDatabase
@@ -130,6 +135,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
         return transaction
     }
 
+    // return total amount where type = expense
     fun getTotalExpense() : Float{
         val db = this.writableDatabase
         val sqlCalculate: String =
@@ -141,6 +147,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
         return sum
     }
 
+    // return total amount where type = income
     fun getTotalIncome() : Float{
         val db = this.writableDatabase
         val sqlCalculate:String =
@@ -152,6 +159,7 @@ class DatabaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?): 
         return sum
     }
 
+    // return total number of rows or transactions we have
     fun getTotalItems() : Int{
         val db = this.writableDatabase
         val sqlCalculate: String = "SELECT COUNT(*) FROM $TABLE_NAME ;"

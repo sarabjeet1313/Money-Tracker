@@ -18,6 +18,9 @@ import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 import mobile.computing.group5.moneytracker.model.Transaction
 
+/**
+ *  main class for view transaction fragment to inflate fragment_transaction_view.xml
+ */
 class ViewTransactionFragment: Fragment() {
 
     override fun onCreateView(
@@ -41,6 +44,7 @@ class ViewTransactionFragment: Fragment() {
 
         val db = DatabaseHelper(activity?.applicationContext!!, null)
 
+        // if id is not null, fetch the transaction from database using transaction id
         if (tid != null) {
             result = db.viewData(tid)
         }
@@ -52,23 +56,27 @@ class ViewTransactionFragment: Fragment() {
         val temp = result.image
         val location = result.location
 
+        // handling image
         if(temp != null){
             imageText.text = "Image Selected"
             val image = temp?.size?.let { BitmapFactory.decodeByteArray(temp, 0, it) }
             button_image.setImageBitmap(image)
         }
 
+        // handling location
         if(location == ""){
             locationText.text = "No location selected"
         }else{
             locationText.text = location
         }
 
+        // handling edit click listener
         button_edit.setOnClickListener {
             val bundle = bundleOf("id" to tid)
             findNavController().navigate(R.id.action_navigation_view_to_navigation_edit, bundle)
         }
 
+        // handling delete click listener
         button_delete.setOnClickListener {
 
             if (tid != null) {
@@ -78,6 +86,7 @@ class ViewTransactionFragment: Fragment() {
             findNavController().navigate(R.id.action_navigation_view_to_navigation_transactions)
         }
 
+        // handling click listener on image
         button_image.setOnClickListener {
             val bundle = bundleOf("id" to tid)
             findNavController().navigate(R.id.action_navigation_view_to_navigation_view_image, bundle)
@@ -86,7 +95,7 @@ class ViewTransactionFragment: Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){     // back button functionality
             findNavController().navigate(R.id.action_navigation_view_to_navigation_transactions)
             return true
         }

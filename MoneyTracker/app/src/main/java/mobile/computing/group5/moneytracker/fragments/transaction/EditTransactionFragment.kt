@@ -27,8 +27,12 @@ import mobile.computing.group5.moneytracker.model.Transaction
 import java.io.ByteArrayOutputStream
 import java.util.*
 
+/**
+ * main class for Edit transaction to inflate fragment_trasaction_edit.xml
+ */
 class EditTransactionFragment: Fragment() {
 
+    // initiliazing local variables
     var tid: Int = 0
     private val CODECAM = 0
     private val CAMERA_CODE = 21
@@ -51,9 +55,10 @@ class EditTransactionFragment: Fragment() {
 
         lateinit var result: Transaction
 
+        // fetching transaction id
         tid = arguments?.getInt("id")!!
         val db = DatabaseHelper(activity?.applicationContext!!, null)
-        result = db.viewData(tid)
+        result = db.viewData(tid)  // getting record for specific id.
 
         input_description.setText(result.desc)
         input_amount.setText(result.amount.toString())
@@ -65,6 +70,7 @@ class EditTransactionFragment: Fragment() {
 
         Log.i("message", byteArray.toString())
 
+        // if image is not null , show the image
         if(byteArray != null){
             imageText.text = "Image Selected"
             val image = byteArray?.size?.let { BitmapFactory.decodeByteArray(byteArray, 0, it) }
@@ -84,6 +90,7 @@ class EditTransactionFragment: Fragment() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
+        // handling click listener to edit calendar functionality
         button_calender.setOnClickListener{
             val dpd = context?.let { it1 ->
                 DatePickerDialog(
@@ -100,6 +107,7 @@ class EditTransactionFragment: Fragment() {
             dpd?.show()
         }
 
+        // update for transactipon type
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
 
             type = when {
@@ -115,6 +123,7 @@ class EditTransactionFragment: Fragment() {
             }
         }
 
+        // re-capture the image
         button_image.setOnClickListener{
             if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
                 requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_CODE)
@@ -123,6 +132,7 @@ class EditTransactionFragment: Fragment() {
             }
         }
 
+        // delete button click handler
         button_delete.setOnClickListener {
             byteArray = null
             imageText.text = "No image selected"
@@ -131,6 +141,7 @@ class EditTransactionFragment: Fragment() {
             button_delete.visibility = View.INVISIBLE
         }
 
+        // update button click handler
         button_update.setOnClickListener {
 
             val description = input_description.text.toString()
@@ -138,6 +149,7 @@ class EditTransactionFragment: Fragment() {
             val date = dateText.text.toString()
             val location = locationText.text.toString()
 
+            // error checking
             if(description == "" || amount == ""){
                 Toast.makeText(context, "Please enter the fields", Toast.LENGTH_SHORT).show()
             }else if(type == ""){
@@ -159,7 +171,7 @@ class EditTransactionFragment: Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){  // back button handling
             val bundle = bundleOf("id" to tid)
             findNavController().navigate(R.id.action_navigation_edit_to_navigation_view, bundle)
             return true
@@ -167,6 +179,7 @@ class EditTransactionFragment: Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    // requesting permissions and accessing camera.
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if(requestCode == CAMERA_CODE){
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -197,6 +210,7 @@ class EditTransactionFragment: Fragment() {
         }
     }
 
+    // start the camera
     private fun openCamera(){
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(callCameraIntent,CODECAM)

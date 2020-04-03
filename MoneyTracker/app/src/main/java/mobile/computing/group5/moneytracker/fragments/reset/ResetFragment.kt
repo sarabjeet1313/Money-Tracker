@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.fragment_reset.*
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 
-
+/**
+ * main class for reset fragment to inflate fragment_reset.xml
+ */
 class ResetFragment : Fragment() {
 
     override fun onCreateView(
@@ -31,19 +33,21 @@ class ResetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // click handler for "Yes" button
         button_yes.setOnClickListener {
             val db = DatabaseHelper(activity?.applicationContext!!, null)
             var message = ""
-            message = if(db.readData().size == 0){
+            message = if(db.readData().size == 0){  // check if database is empty
                 "No transaction present!!"
             }else{
-                db.clearTable()
+                db.clearTable()          // if not empty clear it
                 "Transactions Cleared!!"
             }
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_navigation_reset_to_navigation_home)
         }
 
+        // click handler for "No" button
         button_no.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_reset_to_navigation_more)
         }
@@ -51,7 +55,7 @@ class ResetFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){  // back button functionality
             findNavController().navigate(R.id.action_navigation_reset_to_navigation_more)
             return true
         }

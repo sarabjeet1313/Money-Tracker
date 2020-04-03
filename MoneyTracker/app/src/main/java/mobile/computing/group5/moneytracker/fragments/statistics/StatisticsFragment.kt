@@ -18,8 +18,12 @@ import com.github.mikephil.charting.data.PieEntry
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 
+/**
+ * main class for statistics fragment to inflate the fragment_statistics.xml
+ */
 class StatisticsFragment : Fragment() {
 
+    // local private variables.
     private var type = listOf("Expense" , "Income")
     private lateinit var dbHandler: DatabaseHelper
 
@@ -38,8 +42,9 @@ class StatisticsFragment : Fragment() {
         val view: View = mInflater.inflate(R.layout.fragment_statistics, container, false)
         setHasOptionsMenu(true)
 
-        val pie:PieChart = view.findViewById(R.id.pieChart)
+        val pie:PieChart = view.findViewById(R.id.pieChart)  // getting view object
 
+        // adding features
         pie.isRotationEnabled = true
         pie.holeRadius = 0f
         pie.setTransparentCircleAlpha(1)
@@ -47,6 +52,7 @@ class StatisticsFragment : Fragment() {
 
         addDataToPie(pie)
 
+        // adding legend information
         val l:Legend = pie.legend
 
         val expenseEntry = LegendEntry("Expense", Legend.LegendForm.CIRCLE,20f,20f,null,Color.parseColor("#F44336"))
@@ -56,11 +62,13 @@ class StatisticsFragment : Fragment() {
         return view
     }
 
+    // inflate the view with data
     private fun addDataToPie(pie: PieChart) {
 
         val amountEntry : MutableList<PieEntry> = ArrayList()
         val typeEntry : MutableList<String> = ArrayList()
 
+        // accessing database
         val amount = listOf(dbHandler.getTotalExpense(), dbHandler.getTotalIncome())
 
         for( i in amount) {
@@ -86,7 +94,7 @@ class StatisticsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){     // back button functionality
             findNavController().navigate(R.id.action_navigation_statistics_to_navigation_more)
             return true
         }

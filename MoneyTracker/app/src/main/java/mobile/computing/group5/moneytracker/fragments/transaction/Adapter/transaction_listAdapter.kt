@@ -15,18 +15,24 @@ import kotlinx.android.synthetic.main.item_transaction.view.type
 import mobile.computing.group5.moneytracker.R
 import mobile.computing.group5.moneytracker.fragments.transaction.Model.transactions_list
 
+/**
+ *  Adapter class for handling transactions
+ */
 class transaction_listAdapter(private val Transactions: List<transactions_list>)
     : RecyclerView.Adapter<transaction_listAdapter.ViewHolder>() {
 
+    // creating view holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val holder = LayoutInflater.from(parent.context).inflate(R.layout.item_transaction, parent, false)
         return ViewHolder(holder)
     }
 
+    // get total item
     override fun getItemCount(): Int {
         return Transactions.size
     }
 
+    // binding the view holder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val transaction = Transactions[position]
         holder.bind(transaction)
@@ -34,6 +40,7 @@ class transaction_listAdapter(private val Transactions: List<transactions_list>)
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        // bind the data with card views to show different transactions
         fun bind(transaction : transactions_list) {
             itemView.date.text = transaction.date
             itemView.description.text = transaction.description
@@ -47,7 +54,7 @@ class transaction_listAdapter(private val Transactions: List<transactions_list>)
                 itemView.type.setTextColor(Color.parseColor("#F44336"))
             }
 
-
+            // click listener on each transaction card view to navigate to view transaction fragment.
             itemView.setOnClickListener {
 
                 val bundle: Bundle? = Bundle()

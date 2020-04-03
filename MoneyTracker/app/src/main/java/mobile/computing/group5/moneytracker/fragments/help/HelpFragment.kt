@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import mobile.computing.group5.moneytracker.R
 
+/**
+ * main class for help fragment that inflates the fragment_help.xml
+ */
 class HelpFragment : Fragment() {
 
     override fun onCreateView(
@@ -32,7 +35,7 @@ class HelpFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == 16908332){
+        if(item.itemId == 16908332){     // back button functionality
             findNavController().navigate(R.id.action_navigation_help_to_navigation_more)
             return true
         }

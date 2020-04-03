@@ -1,5 +1,8 @@
 package mobile.computing.group5.moneytracker.fragments.transaction.Model
 
+/**
+ * data class or local model for transactions
+ */
 data class transactions_list (
 
     var date: String,

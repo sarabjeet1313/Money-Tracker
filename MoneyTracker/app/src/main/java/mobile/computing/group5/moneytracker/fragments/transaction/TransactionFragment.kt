@@ -16,8 +16,12 @@ import mobile.computing.group5.moneytracker.fragments.transaction.Model.transact
 import mobile.computing.group5.moneytracker.model.DatabaseHelper
 import mobile.computing.group5.moneytracker.model.Transaction
 
+/**
+ * main class for all transaction fragment to inflate the fragment_transaction.xml
+ */
 class TransactionFragment : Fragment() {
 
+    // local private variables
     private lateinit var recyclerView: RecyclerView
     private lateinit var dbHandler: DatabaseHelper
     private lateinit var noTransaction: TextView
@@ -35,16 +39,19 @@ class TransactionFragment : Fragment() {
         val transactions = createTransactionList()
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
 
+        // fetching view objects
         recyclerView = root.findViewById<View>(R.id.transactionRecyclerView) as RecyclerView
         noTransaction = root.findViewById<View>(R.id.noTransactionText) as TextView
         noTransaction.visibility = View.GONE
 
+        // calling and attaching adapter
         recyclerView.adapter =
             transaction_listAdapter(
                 transactions
             )
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
+        // show message when no transaction is present
         if(transactions.isEmpty()) {
             noTransaction.visibility = View.VISIBLE
         }
@@ -52,6 +59,7 @@ class TransactionFragment : Fragment() {
         return root
     }
 
+    // access the database and read every transaction
     private fun createTransactionList(): List<transactions_list> {
         val transactionList = mutableListOf<transactions_list>()
         var moneyList: MutableList<Transaction>
@@ -70,6 +78,6 @@ class TransactionFragment : Fragment() {
                 )
             )
         }
-        return transactionList
+        return transactionList  // list to update the card views with the help of adapter
     }
 }
