@@ -145,9 +145,9 @@ class HomeFragment : Fragment() {
 
             // error handling for specific fields.
             if(description == "" || amount == ""){
-                Toast.makeText(context, "Please enter the fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please enter the fields!!", Toast.LENGTH_SHORT).show()
             }else if(type == ""){
-                Toast.makeText(context, "Please select the type", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please select the type!!", Toast.LENGTH_SHORT).show()
             }else{
 
                 if(date == "Today"){
