@@ -2,6 +2,12 @@
 
 Mobile Computing Project => Money Tracker
 
+Money Tracker is an application that can help users to keep track of their expenses and income.
+User can add any money related transaction with the additional features like:
+1. Attaching an Image of the bill or paycheck.
+2. Provide a location of your purchase.
+
+The application also provides a feature to show graphical view of the records.
 
 Group Members:
 
